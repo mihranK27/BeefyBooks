@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace BeefyBookClub.Data
+namespace BeefyBooksClub.DataAccess.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

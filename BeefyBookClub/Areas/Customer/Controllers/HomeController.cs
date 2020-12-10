@@ -5,10 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using BeefyBookClub.Models;
+using BeefyBooksClub.Models.ViewModels;
 
-namespace BeefyBookClub.Controllers
+namespace BeefyBookClub.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
