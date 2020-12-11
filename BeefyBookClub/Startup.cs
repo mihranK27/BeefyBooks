@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BeefyBooksClub.DataAccess.Data;
+using BeefyBooksClub.DataAccess.Repository.IRepository;
+using BeefyBooksClub.DataAccess.Repository;
 
 namespace BeefyBookClub
 {
@@ -29,6 +31,7 @@ namespace BeefyBookClub
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
         }
