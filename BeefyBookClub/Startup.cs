@@ -14,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using BeefyBooksClub.DataAccess.Data;
 using BeefyBooksClub.DataAccess.Repository.IRepository;
 using BeefyBooksClub.DataAccess.Repository;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using BeefyBooksClub.Utility;
 
 namespace BeefyBookClub
 {
@@ -30,10 +32,28 @@ namespace BeefyBookClub
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddSingleton<IEmailSender, EmailSender>();
+            services.Configure<EmailOptions>(Configuration);
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
+            //services.AddAuthentication().AddFacebook(options =>
+            //{
+            //    options.AppId = "235168407964320";
+            //    options.AppSecret = "e76a9a6a81161e083558a362d2293a61";
+            //});
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = "46110887732-3ije4rijd0buikjqnpkkvpqmee9cjk1b.apps.googleusercontent.com";
+                options.ClientSecret = "DuvDiFnc71iyPCp1fqWyv587";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

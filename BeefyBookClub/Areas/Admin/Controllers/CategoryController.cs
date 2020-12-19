@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using BeefyBooksClub.DataAccess.Repository.IRepository;
 using BeefyBooksClub.Models;
+using BeefyBooksClub.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeefyBookClub.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         // private field of IUnitOfWork

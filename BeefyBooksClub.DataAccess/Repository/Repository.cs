@@ -43,7 +43,7 @@ namespace BeefyBooksClub.DataAccess.Repository
 
             if (includeProperties != null)
             {
-                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProp in includeProperties.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(includeProp);
                 }
